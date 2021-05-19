@@ -19,6 +19,7 @@ RUN ./mvnw dependency:go-offline -B
 
 # Copy the project source
 COPY src src
+COPY src/main/resources/application.properties.example src/main/resources/application.properties
 
 # Package the application
 RUN ./mvnw package -DskipTests
