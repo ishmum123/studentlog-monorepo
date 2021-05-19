@@ -12,7 +12,7 @@ spring.jpa.properties.hibernate.format_sql=true
 
 #spring.liquibase.drop-first=true
 
-server.port=8888
+server.port=8080
 
 #spring.autoconfigure.exclude[0]=org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
@@ -23,9 +23,9 @@ springdoc.api-docs.enabled=true
 springdoc.swagger-ui.path=/swagger-ui.html
 
 #Keycloak default config
-keycloak.realm=MyDemo
-keycloak.resource=my-react-client
-keycloak.auth-server-url=http://localhost:8080/auth
+keycloak.realm=BANBEIS
+keycloak.resource=next-client
+keycloak.auth-server-url=http://localhost:8000/auth
 #keycloak.ssl-required=external
 keycloak.public-client=true
 keycloak.bearer-only=true
@@ -34,6 +34,6 @@ keycloak.principal-attribute=preferred_username
 keycloak.cors=true
 
 # Custom config for token and user info
-keycloak-authorization-uri=http://localhost:8080/auth/realms/MyDemo/protocol/openid-connect/auth
-keycloak-user-info-uri=http://localhost:8080/auth/realms/MyDemo/protocol/openid-connect/userinfo
-keycloak-token-uri=http://localhost:8080/auth/realms/MyDemo/protocol/openid-connect/token
+keycloak-authorization-uri=http://localhost:8000/auth/realms/BANBEIS/protocol/openid-connect/auth
+keycloak-user-info-uri=http://localhost:8000/auth/realms/BANBEIS/protocol/openid-connect/userinfo
+keycloak-token-uri=http://localhost:8000/auth/realms/BANBEIS/protocol/openid-connect/token
