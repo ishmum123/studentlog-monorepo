@@ -10,7 +10,7 @@ RUN mvn -f /home/app/pom.xml clean package
 #
 # Package stage
 #
-FROM quay.io/keycloak/keycloak:12.0.4
+FROM quay.io/keycloak/keycloak:13.0.0
 
 COPY --from=build /home/app/target/PrivacyIDEA-Provider.jar /opt/jboss/keycloak/standalone/deployments/demo.jar
 COPY --from=build /home/app/src/main/resources/theme-resources/templates/privacyIDEA.ftl /opt/jboss/keycloak/themes/base/login/

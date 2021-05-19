@@ -2,6 +2,8 @@ package com.ideal.studentlog.controllers;
 
 
 import com.ideal.studentlog.services.KeycloakRestService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Tag(name = "AuthController", description = "Keycloak authentication and authorization controller")
 @RestController
 @RequestMapping(path = "/keycloak", produces = MediaType.APPLICATION_JSON_VALUE)
 public class KeycloakAuthController {
@@ -29,7 +32,7 @@ public class KeycloakAuthController {
     @Autowired
     private KeycloakRestService keycloakRestService;
 
-
+    @Operation(summary = "Provide username and password of keycloak user. Use the filed accessToken")
     @PostMapping
     public String getToken(String username, String password) {
         return keycloakRestService.login(username,password);
