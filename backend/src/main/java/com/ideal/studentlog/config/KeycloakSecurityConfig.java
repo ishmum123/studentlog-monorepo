@@ -37,10 +37,6 @@ import org.springframework.security.web.authentication.session.NullAuthenticated
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
-//https://gist.github.com/czetsuya/82fe3c9e8b612d82975cc582b962dc16
-//https://stackoverflow.com/a/51671755
-/*@KeycloakConfiguration
-@EnableGlobalMethodSecurity(prePostEnabled = true)*/
 @EnableWebSecurity
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true,
@@ -54,8 +50,6 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
 
     public KeycloakSecurityConfig(KeycloakClientRequestFactory keycloakClientRequestFactory) {
         this.keycloakClientRequestFactory = keycloakClientRequestFactory;
-
-        // to use principal and authentication together with @async
         SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
     }
 
@@ -64,23 +58,11 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
         return new CustomAuthenticationEntryPoint();
     }
 
-    /**
-     * If you don't want to use the keycloak.json file, then uncomment this bean.
-     */
-    /**
-     * Use properties in application.properties instead of keycloak.json
-     */
     @Bean
     @Primary
     public KeycloakConfigResolver keycloakConfigResolver(KeycloakSpringBootProperties properties) {
         return new CustomKeycloakSpringBootConfigResolver(properties);
     }
-
-    /*@Bean
-    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    public KeycloakRestTemplate keycloakRestTemplate() {
-        return new KeycloakRestTemplate(keycloakClientRequestFactory);
-    }*/
 
     public SimpleAuthorityMapper grantedAuthority() {
         SimpleAuthorityMapper mapper = new SimpleAuthorityMapper();
@@ -95,19 +77,13 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
         auth.authenticationProvider(keycloakAuthenticationProvider);
     }
 
-    /**
-     * Use NullAuthenticatedSessionStrategy for bearer-only tokens. Otherwise, use
-     * RegisterSessionAuthenticationStrategy.
-     */
     @Bean
     @Override
     protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
         return new NullAuthenticatedSessionStrategy();
     }
 
-    /**
-     * Secure appropriate endpoints
-     */
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -115,14 +91,11 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry expressionInterceptUrlRegistry =
                 http.cors()
                 .and()
-
                 .csrf().disable() //
-//                .anonymous().disable() //
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //
                 .and() //
                 .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
                         .and()
-
                 .authorizeRequests().antMatchers( "/favicon.ico").permitAll();
 
        /* expressionInterceptUrlRegistry = expressionInterceptUrlRegistry

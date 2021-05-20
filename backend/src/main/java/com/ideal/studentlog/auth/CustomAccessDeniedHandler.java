@@ -32,18 +32,6 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
         new Gson().toJson(body, new TypeReference<Map<String, Object>>() {
         }.getType(), response.getWriter());
-
-      /*  String message = "Custom Error Message from CustomAccessDeniedHandler";
-        HttpStatus httpStatus  = HttpStatus.FORBIDDEN;
-        ErrorResponse errorResponse = new ErrorResponse(httpStatus,message);
-        Gson gson = new GsonBuilder().serializeNulls().create();
-        String jsonResponse = gson.toJson(errorResponse);
-
-        response.setStatus(httpStatus.value());
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
-        response.getWriter().write(jsonResponse);*/
-
     }
 
 }

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -30,11 +31,13 @@ public class TeacherController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @RolesAllowed("ROLE_ADMIN")
     public TeacherDTO create(@RequestBody @Valid TeacherDTO dto) {
         return service.create(dto);
     }
 
     @PatchMapping(path = "/{id}")
+    @RolesAllowed({"ROLE_TEACHER","ROLE_ADMIN"})
     public TeacherDTO update(@PathVariable("id") Integer id, @RequestBody @Valid TeacherDTO dto) throws ServiceException {
         return service.update(id, dto);
     }

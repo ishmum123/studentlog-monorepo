@@ -26,21 +26,25 @@ public class SwaggerConfig {
         final String securitySchemeName = "bearerAuth";
         return new OpenAPI()
                 .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
-                .components(
-                        new Components()
-                                .addSecuritySchemes(securitySchemeName,
-                                        new SecurityScheme()
-                                                .name(securitySchemeName)
-                                                .type(SecurityScheme.Type.HTTP)
-                                                .scheme("bearer")
-                                                .bearerFormat("JWT")
-                                )
-                )
-                .info(
-                        new Info()
-                                .title("Bookstore Rest Api")
-                                .description("Rest Api for bookstore web application")
-                                .version("1.0")
+                .components(getComponents(securitySchemeName))
+                .info(getBookstoreInfo());
+    }
+
+    private Info getBookstoreInfo() {
+        return new Info()
+                        .title("Bookstore Rest Api")
+                        .description("Rest Api for bookstore web application")
+                        .version("1.0");
+    }
+
+    private Components getComponents(String securitySchemeName) {
+        return new Components()
+                .addSecuritySchemes(securitySchemeName,
+                        new SecurityScheme()
+                                .name(securitySchemeName)
+                                .type(SecurityScheme.Type.HTTP)
+                                .scheme("bearer")
+                                .bearerFormat("JWT")
                 );
     }
 
