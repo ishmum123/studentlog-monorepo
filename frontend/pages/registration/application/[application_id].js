@@ -14,6 +14,7 @@ import {confirmDialog} from "primereact/confirmdialog";
 
 const axios = require('axios')
 const student_application_api_address = "http://localhost:8080/student-applications"
+const ssr_student_application_api_address = "http://app-server:8080/student-applications"
 
 const getDecidedById = () => {
   //TODO: get admin/teacher id from context
@@ -21,7 +22,7 @@ const getDecidedById = () => {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(student_application_api_address)
+  const res = await fetch(ssr_student_application_api_address)
   const applications = await res.json()
 
   if (!applications) {
@@ -41,7 +42,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const res = await fetch(student_application_api_address+"/"+params.application_id)
+  const res = await fetch(ssr_student_application_api_address+"/"+params.application_id)
   const application = await res.json()
 
   if (!application) {

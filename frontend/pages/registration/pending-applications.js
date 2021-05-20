@@ -6,10 +6,10 @@ import ApplicationsTable from "../../modules/registration/application_table";
 import {Button} from "primereact/button";
 import {Divider} from "primereact/divider";
 
-const student_application_api_address = "http://localhost:8080/student-applications"
+const ssr_student_application_api_address = "http://app-server:8080/student-applications"
 
 export async function getStaticProps({ params }) {
-  const res = await fetch(student_application_api_address)
+  const res = await fetch(ssr_student_application_api_address)
   const applications = await res.json()
 
   if (!applications) {
