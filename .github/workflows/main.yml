@@ -28,3 +28,6 @@ jobs:
       # Runs a single command using the runners shell
       - name: Build the docker-compose stack
         run: docker-compose up -d
+
+      - name: Cypress run
+          uses: cypress-io/github-action@v2
