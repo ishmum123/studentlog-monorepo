@@ -28,3 +28,9 @@ jobs:
       # Runs a single command using the runners shell
       - name: Build the docker-compose stack
         run: docker-compose up -d
+      - name: npm dependency fix
+          run: cd frontend && npm i
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          working-directory: frontend
