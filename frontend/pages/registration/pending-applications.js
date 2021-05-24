@@ -1,15 +1,14 @@
 import styles from '../../styles/Home.module.css'
 import Head from "next/head";
 import Link from "next/link";
-import Layout from "../../modules/shared/layout";
 import ApplicationsTable from "../../modules/registration/application_table";
 import {Button} from "primereact/button";
 import {Divider} from "primereact/divider";
+import {getAPIBase} from "../../api";
 
-const ssr_student_application_api_address = "http://app-server:8080/student-applications"
-
-export async function getStaticProps({ params }) {
-  const res = await fetch(ssr_student_application_api_address)
+export async function getServerSideProps() {
+  const student_application_api_address = getAPIBase()+"/student-applications"
+  const res = await fetch(student_application_api_address)
   const applications = await res.json()
 
   if (!applications) {
@@ -23,7 +22,6 @@ export async function getStaticProps({ params }) {
   // Pass applications data to the page via props
   return {
     props: { pendingApplications },
-    revalidate: 1,
     notFound: false
   }
 }
