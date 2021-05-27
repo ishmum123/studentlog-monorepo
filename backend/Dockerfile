@@ -15,10 +15,12 @@ COPY suppression.xml .
 # Build all the dependencies in preparation to go offline. 
 # This is a separate step so the dependencies will be cached unless 
 # the pom.xml file has changed.
+RUN dos2unix mvnw
 RUN ./mvnw dependency:go-offline -B
 
 # Copy the project source
 COPY src src
+COPY src/main/resources/application.properties.example src/main/resources/application.properties
 
 # Package the application
 RUN ./mvnw package -DskipTests
