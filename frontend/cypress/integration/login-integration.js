@@ -1,3 +1,5 @@
+import * as data from '../data/auth.json';
+
 const getInputByLabel = (label) => {
     return cy
         .contains('label', label)
@@ -12,18 +14,7 @@ describe('Login Integration Test', () => {
         cy.visit(Cypress.env("base_url"))
             .then(
                 ()=>{
-
-                    const loginCredentials = [
-                        {
-                            username:"teacher",
-                            password: "teacher"
-                        },
-                        {
-                            username:"student",
-                            password: "student"
-                        }
-                    ]
-                    console.log(loginCredentials)
+                    const loginCredentials = data.auth
                     for (let lc of loginCredentials){
                         cy.get('span').contains('Login').click()
                         cy.wait(1000)
