@@ -8,10 +8,10 @@ import {Divider} from "primereact/divider";
 import {InputText} from "primereact/inputtext";
 import 'primeflex/primeflex.css';
 import {Toast} from "primereact/toast";
-import {getAPIBase} from "../../api";
+import {getStudentApplicationAPI} from "../../api";
 import axios from "axios";
 
-const student_application_api_address = getAPIBase()+"/student-applications"
+const student_application_api_address = getStudentApplicationAPI()
 
 export default function DraftApplication() {
   const [applicationId, setApplicationId] = useState("");

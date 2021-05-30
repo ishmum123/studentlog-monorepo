@@ -9,7 +9,7 @@ import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import {Toast} from "primereact/toast";
 import {confirmDialog} from "primereact/confirmdialog";
-import {getAPIBase} from "../../../api";
+import {getStudentApplicationAPI} from "../../../api";
 import axios from "axios";
 
 const getDecidedById = () => {
@@ -18,7 +18,7 @@ const getDecidedById = () => {
 }
 
 export async function getServerSideProps({params}) {
-  const student_application_api_address = getAPIBase()+"/student-applications"
+  const student_application_api_address = getStudentApplicationAPI()
 
   const res = await fetch(student_application_api_address+"/"+params.application_id)
   const application = await res.json()
@@ -36,7 +36,7 @@ export async function getServerSideProps({params}) {
   }
 }
 
-const student_application_api_address = getAPIBase()+"/student-applications"
+const student_application_api_address = getStudentApplicationAPI()
 
 export default function StudentApplication({application}) {
   const router = useRouter();

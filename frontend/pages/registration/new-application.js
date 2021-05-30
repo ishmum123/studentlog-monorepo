@@ -5,10 +5,10 @@ import Link from "next/link";
 import ApplicationForm from "../../modules/registration/application_form";
 import {Button} from "primereact/button";
 import {Divider} from "primereact/divider";
-import {getAPIBase} from "../../api";
+import {getStudentApplicationAPI} from "../../api";
 import axios from "axios";
 
-const student_application_api_address = getAPIBase()+"/student-applications"
+const student_application_api_address = getStudentApplicationAPI()
 
 export default function NewApplication() {
   const [applicationId, setApplicationId] = useState(null);

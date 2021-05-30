@@ -4,10 +4,10 @@ import Link from "next/link";
 import ApplicationsTable from "../../modules/registration/application_table";
 import {Button} from "primereact/button";
 import { Divider } from 'primereact/divider';
-import {getAPIBase} from "../../api";
+import {getStudentApplicationAPI} from "../../api";
 
 export async function getServerSideProps() {
-  const student_application_api_address = getAPIBase()+"/student-applications"
+  const student_application_api_address = getStudentApplicationAPI()
   const res = await fetch(student_application_api_address)
   const applications = await res.json()
 

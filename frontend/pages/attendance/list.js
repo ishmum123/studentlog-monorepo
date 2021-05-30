@@ -8,10 +8,10 @@ import {Toolbar} from 'primereact/toolbar';
 import {Button} from 'primereact/button';
 import {Toast} from "primereact/toast";
 import {Calendar} from "primereact/calendar";
-import {getAPIBase} from "../../api";
+import {getStudentAPI, getAttendanceAPI} from "../../api";
 
-const BASE_URL_STUDENT = getAPIBase()+"/students"
-const BASE_URL_ATTENDANCE = getAPIBase()+"/attendance"
+const BASE_URL_STUDENT = getStudentAPI()
+const BASE_URL_ATTENDANCE = getAttendanceAPI()
 
 const AttendanceHome = () => {
   const [studentList, setStudentList] = useState([]);

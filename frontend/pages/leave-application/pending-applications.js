@@ -8,10 +8,10 @@ import {InputText} from "primereact/inputtext";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import {Button} from 'primereact/button';
-import {getAPIBase} from "../../api";
+import {getLeaveApplicationAPI} from "../../api";
 
 
-const leave_application_api_address = getAPIBase()+"/leave-applications/"
+const leave_application_api_address = getLeaveApplicationAPI();
 
 export default function PendingApplications() {
   const [leaveApplicationList, setLeaveApplicationList] = useState([]);

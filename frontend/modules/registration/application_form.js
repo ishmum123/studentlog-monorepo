@@ -8,7 +8,7 @@ import 'primeflex/primeflex.css';
 import {Calendar} from "primereact/calendar";
 import { confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
-import {getAPIBase} from "../../api";
+import {getStudentApplicationAPI} from "../../api";
 import axios from "axios";
 
 const clean = (obj) => {
@@ -21,8 +21,7 @@ const clean = (obj) => {
   return cleanedObj;
 }
 
-const student_application_api_address = getAPIBase()+"/student-applications"
-
+const student_application_api_address = getStudentApplicationAPI()
 export default function ApplicationForm(props){
   const router = useRouter();
 

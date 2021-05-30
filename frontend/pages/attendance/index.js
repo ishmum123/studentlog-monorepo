@@ -4,9 +4,9 @@ import axios from "axios";
 import { InputText } from "primereact/inputtext";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import {getAPIBase} from "../../api";
+import {getStudentAPI} from "../../api";
 
-const BASE_URL_STUDENT = getAPIBase()+"/students"
+const BASE_URL_STUDENT = getStudentAPI()
 
 const AttendanceHome = () => {
   const [studentList, setStudentList] = useState([]);
