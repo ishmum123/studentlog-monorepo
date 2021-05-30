@@ -1,13 +1,25 @@
 .menu {
-  position: absolute;
+  position: fixed;
+  padding-top: 20px;
+  background-color: #e2e8ea;
   top: 0;
   left: 0;
   height: 100%;
   width: 10%;
   border-right: 6px solid #ccc;
+  min-width: 105px;
 }
 
 .menuItem {
   padding: 5px;
   margin: 5px;
+  background-color: #557bb9;
+  color: #fafafa;
+  border-radius: 5px;
+  font-weight: bolder;
+  font-family: sans-serif;
+}
+.menuItem:hover {
+  background-color: #97adfc;
+  color: #5a2d2d;
 }
