@@ -3,13 +3,12 @@ import styles from '../../styles/Home.module.css'
 import Head from "next/head";
 import Link from "next/link";
 import ApplicationForm from "../../modules/registration/application_form";
-import Layout from "../../modules/shared/layout";
 import {Button} from "primereact/button";
 import {Divider} from "primereact/divider";
+import {getStudentApplicationAPI} from "../../api";
+import axios from "axios";
 
-
-const axios = require('axios')
-const student_application_api_address = "http://localhost:8080/student-applications"
+const student_application_api_address = getStudentApplicationAPI()
 
 export default function NewApplication() {
   const [applicationId, setApplicationId] = useState(null);
@@ -27,7 +26,6 @@ export default function NewApplication() {
     });
 
   }, []);
-
   if(!applicationId){
     return <div>Loading...</div>
   }

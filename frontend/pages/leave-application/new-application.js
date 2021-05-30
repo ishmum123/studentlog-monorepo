@@ -8,9 +8,10 @@ import {Calendar} from "primereact/calendar";
 import {Button} from "primereact/button";
 import {Toast} from "primereact/toast";
 import {FileUpload} from "primereact/fileupload";
+import {getLeaveApplicationAPI} from "../../api";
 
 
-const leave_application_api_address = "http://localhost:8080/leave-applications/";
+const leave_application_api_address = getLeaveApplicationAPI();
 
 export default function NewApplication() {
   const [dateFrom, setDateFrom] = useState("");

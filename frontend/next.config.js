@@ -14,4 +14,10 @@ module.exports = {
     ns: ["common"],
     debug: true,
     serializeConfig: false,
+    serverRuntimeConfig: {
+        URI: 'http://app-server:8080'
+    },
+    publicRuntimeConfig: {
+        URI: 'http://localhost:8080'
+    },
 };

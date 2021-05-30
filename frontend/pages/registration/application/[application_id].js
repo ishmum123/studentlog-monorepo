@@ -1,46 +1,25 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import styles from '../../../styles/Home.module.css'
 import Head from "next/head";
 import Link from "next/link";
 import {useRouter} from "next/router";
 import {Button} from "primereact/button";
 import {Divider} from "primereact/divider";
-import {InputText} from "primereact/inputtext";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
-import Layout from "../../../modules/shared/layout";
 import {Toast} from "primereact/toast";
 import {confirmDialog} from "primereact/confirmdialog";
-
-const axios = require('axios')
-const student_application_api_address = "http://localhost:8080/student-applications"
+import {getStudentApplicationAPI} from "../../../api";
+import axios from "axios";
 
 const getDecidedById = () => {
   //TODO: get admin/teacher id from context
   return 1;
 }
 
-export async function getStaticPaths() {
-  const res = await fetch(student_application_api_address)
-  const applications = await res.json()
+export async function getServerSideProps({params}) {
+  const student_application_api_address = getStudentApplicationAPI()
 
-  if (!applications) {
-    return {
-      notFound: true,
-    }
-  }
-
-  const paths = applications.map(a =>{
-    return {params: { application_id: a.id.toString() }}
-  });
-
-  return {
-    paths,
-    fallback: true
-  };
-}
-
-export async function getStaticProps({ params }) {
   const res = await fetch(student_application_api_address+"/"+params.application_id)
   const application = await res.json()
 
@@ -53,10 +32,11 @@ export async function getStaticProps({ params }) {
   // Pass application data to the page via props
   return {
     props: { application },
-    revalidate: 1,
     notFound: false
   }
 }
+
+const student_application_api_address = getStudentApplicationAPI()
 
 export default function StudentApplication({application}) {
   const router = useRouter();

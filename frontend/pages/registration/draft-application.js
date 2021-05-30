@@ -3,15 +3,15 @@ import styles from '../../styles/Home.module.css'
 import Head from "next/head";
 import Link from "next/link";
 import ApplicationForm from "../../modules/registration/application_form";
-import Layout from "../../modules/shared/layout";
 import {Button} from "primereact/button";
 import {Divider} from "primereact/divider";
 import {InputText} from "primereact/inputtext";
 import 'primeflex/primeflex.css';
 import {Toast} from "primereact/toast";
+import {getStudentApplicationAPI} from "../../api";
+import axios from "axios";
 
-const axios = require('axios')
-const student_application_api_address = "http://localhost:8080/student-applications"
+const student_application_api_address = getStudentApplicationAPI()
 
 export default function DraftApplication() {
   const [applicationId, setApplicationId] = useState("");
