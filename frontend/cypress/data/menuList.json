@@ -1,0 +1,8 @@
+{
+  "urls":[
+    {"url": "/attendance", "roles": ["teacher"]},
+    {"url": "/attendance/list", "roles": ["teacher"]},
+    {"url": "/leave-application/pending-applications", "roles": ["teacher"]},
+    {"url": "/leave-application/new-application", "roles": ["student"]}
+  ]
+}
