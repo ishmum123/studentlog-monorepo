@@ -5,15 +5,28 @@ import { InputText } from "primereact/inputtext";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import {getStudentAPI} from "../../api";
+import {useKeycloak} from "@react-keycloak/ssr";
 
 const BASE_URL_STUDENT = getStudentAPI()
 
 const AttendanceHome = () => {
+  const keycloak = useKeycloak();
+  // dummy
+
+  //
+  const token = keycloak?.keycloak.token;
   const [studentList, setStudentList] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
 
+  const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' +  token
+        }
+  }
+
   useEffect(async () => {
-    await axios.get(BASE_URL_STUDENT)
+    await axios.get(BASE_URL_STUDENT, config)
       .then(res => setStudentList(res.data))
       .catch(error => console.log("Error occured " + error))
   }, [])
