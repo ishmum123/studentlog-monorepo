@@ -1,0 +1,32 @@
+{
+  "apis":[
+    {"roles": ["teacher"],
+      "options": {
+        "url": "http://localhost:8080/attendance",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": ""
+        },
+        "failOnStatusCode": false
+      }
+    },
+    {"roles": ["teacher"],
+      "options": {
+        "url": "http://localhost:8080/tests",
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": ""
+        },
+        "body":
+        {
+          "subject": "Bengali",
+          "examiner": "Test Examiner 2",
+          "date": "2021-06-07T03:35:05.584+00:00"
+        },
+        "failOnStatusCode": false
+      }
+    }
+  ]
+}
