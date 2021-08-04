@@ -1,12 +1,8 @@
 import Head from 'next/head'
-import Link from 'next/link'
 import styles from '../../styles/Home.module.css'
-import Layout from "../../modules/shared/layout";
 
-import { Button } from 'primereact/button';
-// import './ButtonDemo.css';
+import {RegistrationMenuRow} from "../../modules/shared/utils";
 
-//TODO: create registration home page
 export default function RegistrationHome() {
   return (
     <>
@@ -22,38 +18,10 @@ export default function RegistrationHome() {
           </h1>
 
           <h2>
-            <p style={{textAlign: "center"}}>
-              <Button className="p-button-link">
-                <Link href ="/registration/new-application">
-                  <a >New Student Application</a>
-                </Link>
-              </Button>
-            </p>
-
-            <p style={{textAlign: "center"}}>
-              <Button className="p-button-link">
-                <Link href ="/registration/draft-application">
-                  <a>Retrieve Draft Student Application</a>
-                </Link>
-              </Button>
-            </p>
-
-            <p style={{textAlign: "center"}}>
-              <Button className="p-button-link">
-                <Link href ="/registration/pending-applications">
-                  <a>View Pending Applications</a>
-                </Link>
-              </Button>
-            </p>
-
-            <p style={{textAlign: "center"}}>
-              <Button className="p-button-link">
-                <Link href ="/registration/all-applications">
-                  <a>View All Applications</a>
-                </Link>
-              </Button>
-            </p>
-
+            <RegistrationMenuRow link = "/registration/new-application" title = "New Student Application"/>
+            <RegistrationMenuRow link = "/registration/draft-application" title = "Retrieve Draft Student Application"/>
+            <RegistrationMenuRow link = "/registration/pending-applications" title = "View Pending Applications"/>
+            <RegistrationMenuRow link = "/registration/all-applications" title = "View All Applications"/>
           </h2>
 
         </main>
@@ -62,6 +30,5 @@ export default function RegistrationHome() {
         </footer>
       </div>
     </>
-
   )
 }

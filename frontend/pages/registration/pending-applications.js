@@ -5,6 +5,7 @@ import ApplicationsTable from "../../modules/registration/application_table";
 import {Button} from "primereact/button";
 import {Divider} from "primereact/divider";
 import {getStudentApplicationAPI} from "../../api";
+import RegistrationApplicationTopBar from "../../modules/registration/registration_application_top_bar";
 
 export async function getServerSideProps() {
   const student_application_api_address = getStudentApplicationAPI()
@@ -17,11 +18,8 @@ export async function getServerSideProps() {
     }
   }
 
-  const pendingApplications = applications.filter(a => a.status === "submitted")
-
-  // Pass applications data to the page via props
   return {
-    props: { pendingApplications },
+    props: { pendingApplications : applications.filter(a => a.status === "submitted") },
     notFound: false
   }
 }
@@ -41,23 +39,7 @@ export default function PendingApplications({pendingApplications, notFound}) {
             Pending Student Applications
           </h1>
 
-          <Divider />
-
-          <div className="card">
-            <p><Button className="p-button-link">
-              <Link href ="/">
-                <a>Home Page</a>
-              </Link>
-            </Button></p>
-
-            <p><Button className="p-button-link">
-              <Link href ="/registration">
-                <a>Registration Home Page</a>
-              </Link>
-            </Button></p>
-          </div>
-
-          <Divider />
+          <RegistrationApplicationTopBar/>
 
           <ApplicationsTable applications={pendingApplications}
                              notFound={notFound}/>
