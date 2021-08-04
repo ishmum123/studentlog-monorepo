@@ -1,7 +1,6 @@
 import React, {useRef, useState} from "react";
 import styles from '../../../styles/Home.module.css'
 import Head from "next/head";
-import Link from "next/link";
 import {useRouter} from "next/router";
 import {Button} from "primereact/button";
 import {Divider} from "primereact/divider";
@@ -11,181 +10,157 @@ import {Toast} from "primereact/toast";
 import {confirmDialog} from "primereact/confirmdialog";
 import {getStudentApplicationAPI} from "../../../api";
 import axios from "axios";
+import {showToast} from "../../../modules/shared/utils";
+import RegistrationApplicationTopBar from "../../../modules/registration/registration_application_top_bar";
 
 const getDecidedById = () => {
-  //TODO: get admin/teacher id from context
-  return 1;
+    return 1;
 }
 
 export async function getServerSideProps({params}) {
-  const student_application_api_address = getStudentApplicationAPI()
+    const student_application_api_address = getStudentApplicationAPI()
 
-  const res = await fetch(student_application_api_address+"/"+params.application_id)
-  const application = await res.json()
+    const res = await fetch(student_application_api_address + "/" + params.application_id)
+    const application = await res.json()
 
-  if (!application) {
-    return {
-      notFound: true,
+    if (!application) {
+        return {
+            notFound: true,
+        }
     }
-  }
 
-  // Pass application data to the page via props
-  return {
-    props: { application },
-    notFound: false
-  }
+    // Pass application data to the page via props
+    return {
+        props: {application},
+        notFound: false
+    }
 }
 
 const student_application_api_address = getStudentApplicationAPI()
 
 export default function StudentApplication({application}) {
-  const router = useRouter();
-  const decisionToast = useRef(null);
-  const [buttonsDisabled, setButtonsDisabled] = useState(false);
+    const router = useRouter();
+    const decisionToast = useRef(null);
+    const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
-  if (router.isFallback) {
-    return <div>Loading...</div>
-  }
-
-  if(!application){
-    return <div>Error...</div>
-
-  }
-
-  const submitDecision = (decision) =>{
-    setButtonsDisabled(true);
-
-    const changedApplication = {...application, decidedById: getDecidedById(), status : decision}
-    axios.patch(student_application_api_address+"/"+application.id, changedApplication).then(resp => {
-      decisionToast.current.show({severity:'success', summary: "Application " + decision,
-        detail:'Application ' + application.id + ' ' + decision + ' Successfully', life: 3000});
-    }).catch(error => {
-      // console.log(error);
-      decisionToast.current.show({severity:'error', summary: 'Error Occurred',
-        detail:"Failed", life: 3000});
-    });
-  }
-
-  const confirmDecision = (msg, decision) => {
-    confirmDialog({
-      message: msg,
-      header: 'Confirmation',
-      icon: 'pi pi-save',
-      accept: () => submitDecision(decision)
-    });
-  }
-
-  const onDecisionClick = (e, decision) => {
-    e.preventDefault();
-    let msg = "";
-    if (decision === "approved"){
-      msg = "Approve application: " + application.id + "?";
+    if (router.isFallback) {
+        return <div>Loading...</div>
     }
-    else if(decision === "rejected"){
-      msg = "Reject application: " + application.id + "?";
 
+    if (!application) {
+        return <div>Error...</div>;
     }
-    confirmDecision(msg, decision);
-  }
 
-  const convertObject = (obj) => {
-    let arr = [];
+    const submitDecision = (decision) => {
+        setButtonsDisabled(true);
 
-    arr.push({field: "Applied Date", value: String(application.appliedDate).split('T')[0]});
-    arr.push({field: "Decided by ID", value: application.decidedById});
-    arr.push({field: "Name", value: application.name});
-    arr.push({field: "Date of Birth", value: String(application.dateOfBirth).split('T')[0]});
-    arr.push({field: "Blood Group", value: application.bloodGroup});
-    arr.push({field: "Birth Registration ID", value: application.birthRegistrationId});
-    arr.push({field: "Registration ID", value: application.registrationId});
-    arr.push({field: "Present Address", value: application.presentAddress});
-    arr.push({field: "Permanent Address", value: application.permanentAddress});
-    arr.push({field: "Guardian Name", value: application.guardianName});
-    arr.push({field: "Guardian Email", value: application.guardianEmail});
-    arr.push({field: "Guardian Phone", value: application.guardianPhone});
-    arr.push({field: "Applied for Grade", value: application.appliedForGrade});
-    arr.push({field: "Status", value: application.status});
+        const changedApplication = {...application, decidedById: getDecidedById(), status: decision}
+        axios.patch(student_application_api_address + "/" + application.id, changedApplication).then(resp => {
+            showToast(decisionToast, 'success', "Application " + decision, 'Application ' + application.id + ' ' + decision + ' Successfully');
+        }).catch(error => {
+            showToast(decisionToast, 'error', "Error Occurred", "Failed");
+        });
+    };
 
-    return arr;
-  }
+    const confirmDecision = (msg, decision) => {
+        confirmDialog({
+            message: msg,
+            header: 'Confirmation',
+            icon: 'pi pi-save',
+            accept: () => submitDecision(decision)
+        });
+    }
 
-  const tableFormattedData = convertObject(application)
+    const onDecisionClick = (e, decision) => {
+        e.preventDefault();
+        let msg = "";
+        if (decision === "approved") {
+            msg = "Approve application: " + application.id + "?";
+        } else if (decision === "rejected") {
+            msg = "Reject application: " + application.id + "?";
+        }
+        confirmDecision(msg, decision);
+    };
 
-  return (
-    <>
-      <div >
-        <Head>
-          <title>Student Applications Details</title>
-          <link rel="icon" href="../../../public/favicon.ico"/>
-        </Head>
+    const convertObject = (obj) => {
+        let arr = [];
 
-        <main >
-          <Toast  id="decision_toast"
-                  ref={decisionToast}
-                  position="top-right"
-                  onHide={() => router.reload()}
-          />
-          <h1 className={styles.title}>
-            Student Applications Details
-          </h1>
+        arr.push({field: "Applied Date", value: String(application.appliedDate).split('T')[0]});
+        arr.push({field: "Decided by ID", value: application.decidedById});
+        arr.push({field: "Name", value: application.name});
+        arr.push({field: "Date of Birth", value: String(application.dateOfBirth).split('T')[0]});
+        arr.push({field: "Blood Group", value: application.bloodGroup});
+        arr.push({field: "Birth Registration ID", value: application.birthRegistrationId});
+        arr.push({field: "Registration ID", value: application.registrationId});
+        arr.push({field: "Present Address", value: application.presentAddress});
+        arr.push({field: "Permanent Address", value: application.permanentAddress});
+        arr.push({field: "Guardian Name", value: application.guardianName});
+        arr.push({field: "Guardian Email", value: application.guardianEmail});
+        arr.push({field: "Guardian Phone", value: application.guardianPhone});
+        arr.push({field: "Applied for Grade", value: application.appliedForGrade});
+        arr.push({field: "Status", value: application.status});
 
-          <Divider />
+        return arr;
+    };
 
-          <div className="card">
-            <p><Button className="p-button-link">
-              <Link href ="/">
-                <a>Home Page</a>
-              </Link>
-            </Button></p>
+    const tableFormattedData = convertObject(application)
 
-            <p><Button className="p-button-link">
-              <Link href ="/registration">
-                <a>Registration Home Page</a>
-              </Link>
-            </Button></p>
-          </div>
+    return (
+        <>
+            <div>
+                <Head>
+                    <title>Student Applications Details</title>
+                    <link rel="icon" href="../../../public/favicon.ico"/>
+                </Head>
 
-          <Divider />
+                <main>
+                    <Toast ref={decisionToast}
+                           onHide={() => router.reload()}
+                    />
+                    <h1 className={styles.title}>
+                        Student Applications Details
+                    </h1>
 
-          <div className="card">
-            <DataTable
-              value={tableFormattedData}>
-              <Column field="field" header="Registration ID"/>
-              <Column field="value" header="Name"/>
-            </DataTable>
-          </div>
+                    <RegistrationApplicationTopBar/>
 
-          <Divider />
+                    <div className="card">
+                        <DataTable
+                            value={tableFormattedData}>
+                            <Column field="field" header="Registration ID"/>
+                            <Column field="value" header="Name"/>
+                        </DataTable>
+                    </div>
 
-          <div style={{ margin: "auto", marginBottom: "1em" }}>
+                    <Divider/>
 
-            <form id="decisionForm">
-              <Button
-                disabled={application.status !== "submitted" || buttonsDisabled}
-                onClick={(e) => onDecisionClick(e, "approved")}
-                icon="pi pi-check"
-                className="p-button-success p-mr-2"
-                style={{width:'220px'}}
-                label="Approve Application"/>
+                    <div style={{margin: "auto", marginBottom: "1em"}}>
 
-              <Button
-                disabled={application.status !== "submitted" || buttonsDisabled}
-                type="button"
-                className="p-button-danger p-mr-2"
-                onClick={(e) => onDecisionClick(e, "rejected")}
-                icon="pi pi-times"
-                style={{width:'220px'}}
-                label="Reject Application"/>
-            </form>
+                        <form id="decisionForm">
+                            <Button
+                                disabled={application.status !== "submitted" || buttonsDisabled}
+                                onClick={(e) => onDecisionClick(e, "approved")}
+                                icon="pi pi-check"
+                                className="p-button-success p-mr-2"
+                                style={{width: '220px'}}
+                                label="Approve Application"/>
 
-          </div>
+                            <Button
+                                disabled={application.status !== "submitted" || buttonsDisabled}
+                                type="button"
+                                onClick={(e) => onDecisionClick(e, "rejected")}
+                                icon="pi pi-times"
+                                className="p-button-danger p-mr-2"
+                                style={{width: '220px'}}
+                                label="Reject Application"/>
+                        </form>
 
-        </main>
+                    </div>
 
-        <footer className={styles.footer}>
-        </footer>
-      </div>
-    </>
+                </main>
 
-  );
+                <footer className={styles.footer}>
+                </footer>
+            </div>
+        </>
+    );
 }

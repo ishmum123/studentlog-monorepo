@@ -1,19 +1,17 @@
 import {useEffect, useState} from "react";
 import styles from '../../styles/Home.module.css'
 import Head from "next/head";
-import Link from "next/link";
 import ApplicationForm from "../../modules/registration/application_form";
-import {Button} from "primereact/button";
-import {Divider} from "primereact/divider";
 import {getStudentApplicationAPI} from "../../api";
 import axios from "axios";
+import RegistrationApplicationTopBar from "../../modules/registration/registration_application_top_bar";
 
 const student_application_api_address = getStudentApplicationAPI()
 
 export default function NewApplication() {
   const [applicationId, setApplicationId] = useState(null);
 
-  useEffect(() => { // side effect hook
+  useEffect(() => {
     //generating a blank form for getting a unique id for saving as draft
     const application_body = {
       appliedDate: new Date(),
@@ -43,23 +41,7 @@ export default function NewApplication() {
             Student Application Form
           </h1>
 
-          <Divider />
-
-          <div className="card">
-            <p><Button className="p-button-link">
-              <Link href ="/">
-                <a>Home Page</a>
-              </Link>
-            </Button></p>
-
-            <p><Button className="p-button-link">
-              <Link href ="/registration">
-                <a>Registration Home Page</a>
-              </Link>
-            </Button></p>
-          </div>
-
-          <Divider />
+          <RegistrationApplicationTopBar/>
 
           <ApplicationForm applicationId={applicationId}
                            retrievedData={null}/>
