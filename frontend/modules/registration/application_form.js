@@ -22,6 +22,8 @@ const clean = (obj) => {
     return cleanedObj;
 };
 
+const visibilityLogic = (booleanValue) => booleanValue ? 'visible' : 'invisible';
+
 const student_application_api_address = getStudentApplicationAPI()
 export default function ApplicationForm(props) {
     const router = useRouter();
@@ -156,94 +158,79 @@ export default function ApplicationForm(props) {
 
             <form id="applicationForm" action="none">
 
-                <InputTextField id="id" label="Application id:" value={applicationId} isDisabled={true}
-                                smallLogic={true} smallMessage="Please keep this ID for retrieval."/>
-                <InputTextField id="name" label="Student Name:" value={name}
-                                onChangeEvent={event => setName(event.target.value)}
-                                isDisabled={false} smallLogic={(name && !isValidName)}
+                <InputTextField width="96" marginRight="24" id="id" label="Application ID" placeholder="Application ID"  value={applicationId}
+                                isDisabled={true}
+                                visibility={visibilityLogic(true)}
+                                smallMessage="Please keep this ID for retrieval."/>
+
+                <InputTextField width="96" marginRight="24" id="guardian_name" label="Guardian Name" placeholder="Guardian Name" value={guardianName}
+                                isDisabled={false} onChangeEvent={event => setGuardianName(event.target.value)}
+                                visibility={visibilityLogic(guardianName && !isValidGuardianName)}
+                                smallMessage="Guardian Name must be between 5 to 50 characters."/>
+                                <br/>
+                <InputTextField width="96" marginRight="24" id="name" label="Student Name" placeholder="Student Name" value={name}
+                                isDisabled={false} onChangeEvent={event => setName(event.target.value)}
+                                visibility={visibilityLogic(name && !isValidName)}
                                 smallMessage="Name must be between 5 to 50 characters."/>
 
-                <div className="p-field p-grid">
-                    <label htmlFor="date_of_birth" className="p-col-fixed" style={{width: '180px'}}>Date of
-                        Birth:</label>
-                    <div className="p-col">
-                        <Calendar
-                            monthNavigator
-                            yearNavigator
-                            yearRange="1900:2100"
-                            dateFormat="yy-mm-dd"
-                            id="date_of_birth"
-                            value={new Date(dateOfBirth)}
-                            onChange={event => setDateOfBirth(event.target.value)}
-                        />
-                    </div>
-                </div>
+                <InputTextField width="96" marginRight="24" id="guardian_email" label="Guardian Email"  placeholder="Guardian Email" value={guardianEmail}
+                                isDisabled={false} onChangeEvent={event => setGuardianEmail(event.target.value)}
+                                visibility={visibilityLogic(guardianEmail && !isValidGuardianEmail)}
+                                smallMessage="Invalid Guardian Email Entered."/>
+                                <br />
 
-                <InputTextField id="blood_group" label="Blood Group:" value={bloodGroup}
+                <div className="inline-block w-96 mr-16 pb-4 ">
+                    <label className="pl-2 block text-md text-gray-600 pb-4" htmlFor="date_of_birth">Date of Birth</label>
+                    <Calendar monthNavigator yearNavigator yearRange="1900:2100" dateFormat="yy-mm-dd"  id="date_of_birth" className="bg-gray-200 rounded"
+                              name="cus_email" value={new Date(dateOfBirth)} onChange={event => setDateOfBirth(event.target.value)}
+                    />
+                </div><br/>
+                <InputTextField  width="96" marginRight="24" id="blood_group" label="Blood Group" placeholder="Blood Group" value={bloodGroup}
                                 onChangeEvent={event => setBloodGroup(event.target.value)}
-                                isDisabled={false} smallLogic={(bloodGroup && !isValidBloodGroup)}
+                                isDisabled={false} visibility={visibilityLogic(bloodGroup && !isValidBloodGroup)}
                                 smallMessage="Invalid blood group."/>
+                <InputTextField width="96" marginRight="24" id="guardian_phone" label="Guardian Contact Number" value={guardianPhone}
+                                onChangeEvent={event => setGuardianPhone(event.target.value)} placeholder="Guardian Contact Number"
+                                isDisabled={false} visibility={visibilityLogic(guardianPhone && !isValidGuardianPhone)}
+                                smallMessage="Invalid Phone Number Entered."/>
+                                <br/>
 
-                <InputTextField id="birth_registration_id" label="Birth Registration ID:" value={birthRegistrationId}
+                <InputTextField  width="96" marginRight="24" id="birth_registration_id" label="Birth Registration ID" value={birthRegistrationId}
                                 onChangeEvent={event => setBirthRegistrationId(event.target.value)}
-                                isDisabled={false} smallLogic={(birthRegistrationId && !isValidBirthRegistrationId)}
+                                isDisabled={false} visibility={visibilityLogic(birthRegistrationId && !isValidBirthRegistrationId)} placeholder="Birth Registration ID"
                                 smallMessage="Birth Registration ID must be between 8 to 20 digits."/>
-
-                <InputTextField id="registration_id" label="Registration ID:" value={registrationId}
+                <InputTextField width="96" marginRight="24" id="applied_for_grade" label="Applied for Grade" value={appliedForGrade} placeholder="Applied for Grade"
+                                onChangeEvent={event => setAppliedForGrade(event.target.value)}
+                                isDisabled={false} visibility={visibilityLogic(appliedForGrade && !isValidAppliedForGrade)}
+                                smallMessage="Invalid Grade Entered."/>
+                                <br/>
+                <InputTextField width="96" marginRight="24" id="registration_id" label="Registration ID" value={registrationId} placeholder="Registration ID"
                                 onChangeEvent={event => setRegistrationId(event.target.value)}
-                                isDisabled={false} smallLogic={(registrationId && !isValidRegistrationId)}
+                                isDisabled={false} visibility={visibilityLogic(registrationId && !isValidRegistrationId)}
                                 smallMessage="Registration ID must be between 8 to 20 digits."/>
-
-                <InputTextField id="present_address" label="Present Address:" value={presentAddress}
+                                <br/>
+                <InputTextField width="96" marginRight="24" id="present_address" label="Present Address" value={presentAddress} placeholder="Present Address"
                                 onChangeEvent={event => setPresentAddress(event.target.value)}
-                                isDisabled={false} smallLogic={(presentAddress && !isValidPresentAddress)}
+                                isDisabled={false} visibility={visibilityLogic(presentAddress && !isValidPresentAddress)}
                                 smallMessage="Present Address must be between 5 to 100 characters."/>
-
-                <InputTextField id="permanent_address" label="Permanent Address:" value={permanentAddress}
+                                <br/>
+                <InputTextField width="96" marginRight="24" id="permanent_address" label="Permanent Address" value={permanentAddress} placeholder="Permanent Address"
                                 onChangeEvent={event => setPermanentAddress(event.target.value)}
-                                isDisabled={false} smallLogic={(permanentAddress && !isValidPermanentAddress)}
+                                isDisabled={false} visibility={visibilityLogic(permanentAddress && !isValidPermanentAddress)}
                                 smallMessage="Permanent Address must be between 5 to 100 characters."/>
 
-                <InputTextField id="guardian_name" label="Guardian Name:" value={guardianName}
-                                onChangeEvent={event => setGuardianName(event.target.value)}
-                                isDisabled={false} smallLogic={(guardianName && !isValidGuardianName)}
-                                smallMessage="Guardian Name must be between 5 to 50 characters."/>
-
-                <InputTextField id="guardian_email" label="Guardian Email:" value={guardianEmail}
-                                onChangeEvent={event => setGuardianEmail(event.target.value)}
-                                isDisabled={false} smallLogic={(guardianEmail && !isValidGuardianEmail)}
-                                smallMessage="Invalid Guardian Email Entered."/>
-
-                <InputTextField id="guardian_phone" label="Guardian Phone:" value={guardianPhone}
-                                onChangeEvent={event => setGuardianPhone(event.target.value)}
-                                isDisabled={false} smallLogic={(guardianPhone && !isValidGuardianPhone)}
-                                smallMessage="Invalid Phone Number Entered."/>
-
-                <InputTextField id="applied_for_grade" label="Applied for Grade:" value={appliedForGrade}
-                                onChangeEvent={event => setAppliedForGrade(event.target.value)}
-                                isDisabled={false} smallLogic={(appliedForGrade && !isValidAppliedForGrade)}
-                                smallMessage="Invalid Grade Entered."/>
-
-                <Divider/>
-
-                <div style={{margin: "auto", marginBottom: "1em"}}>
-                    <Button
+                <div className="ml-80 mt-8">
+                    <button
                         onClick={saveStudentApplicationData}
-                        icon="pi pi-save"
-                        className="p-button-success p-mr-2"
-                        style={{width: '150px'}}
-                        label="Save Draft"
+                        className="w-24 h-10 mr-12 text-green-700 border border-green-700 rounded bg-white shadow-lg block md:inline-block"
                         disabled={buttonsDisabled}
-                    />
+                    >Save Draft</button>
 
-                    <Button
+                    <button
                         disabled={!isValidData || buttonsDisabled}
                         onClick={submitStudentApplicationData}
-                        icon="pi pi-check"
-                        className="p-button-primary p-mr-2"
-                        style={{width: '150px'}}
-                        label="Submit"
-                    />
+                        className="w-24 h-10 text-white rounded bg-green-700 shadow-lg block md:inline-block"
+                    >Submit</button>
                 </div>
             </form>
         </React.Fragment>

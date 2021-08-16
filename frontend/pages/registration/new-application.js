@@ -36,19 +36,15 @@ export default function NewApplication() {
           <link rel="icon" href="../../public/favicon.ico"/>
         </Head>
 
-        <main >
-          <h1 className={styles.title}>
-            Student Application Form
-          </h1>
-
-          <RegistrationApplicationTopBar/>
-
-          <ApplicationForm applicationId={applicationId}
-                           retrievedData={null}/>
-
+        <main>
+          <div className="pb-8 pl-24 text-2xl font-bold">Application Form</div>
+            <div className="ml-24">
+            <ApplicationForm applicationId={applicationId}
+                             retrievedData={null}/>
+          </div>
         </main>
 
-        <footer className={styles.footer}>
+        <footer className="mt-12">
         </footer>
       </div>
     </>

@@ -31,7 +31,7 @@ describe('Login Integration Test', () => {
                         getInputByLabel("Password").type(lc.password)
                         cy.get('form').submit()
                         cy.wait(1000)
-                        cy.get('.p-button-icon-only').click()
+                        cy.get('#logout').click()
                     }
 
                 }
