@@ -28,7 +28,9 @@ const AttendanceHome = () => {
     </div>
 
   return (
-    <div className="card">
+      <>
+      <div className="pb-8 pl-24 text-2xl font-bold">Student List</div>
+    <div className="card ml-24 mr-24">
       <DataTable
         value={studentList}
         globalFilter={globalFilter}
@@ -38,9 +40,10 @@ const AttendanceHome = () => {
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products">
         <Column field="name" header="Name" sortable/>
         <Column field="studentId" header="Student ID" sortable/>
-        {/*<Column field="date" header="Date" sortable/>*/}
+
       </DataTable>
     </div>
+          </>
   );
 }
 

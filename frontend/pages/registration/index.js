@@ -1,34 +1,27 @@
 import Head from 'next/head'
-import styles from '../../styles/Home.module.css'
-
-import {RegistrationMenuRow} from "../../modules/shared/utils";
+import RegistrationMenuCard from "../../modules/registration/registration_menu_card";
 
 export default function RegistrationHome() {
   return (
     <>
-      <div className={styles.container}>
-        <Head>
-          <title>Student Registration</title>
-          <link rel="icon" href="../../public/favicon.ico"/>
-        </Head>
+      <Head>
+        <title>Student Registration</title>
+        <link rel="icon" href="../../public/favicon.ico"/>
+      </Head>
 
-        <main className={styles.main}>
-          <h1 className={styles.title}>
-            Student Registration Home
-          </h1>
+        <div className="pb-8 pl-36 text-2xl font-bold">Student Registration</div>
+        <div className="flex flex-col lg:flex-row w-full lg:space-x-2 space-y-2 lg:space-y-0 mb-2 lg:mb-4 justify-center">
 
-          <h2>
-            <RegistrationMenuRow link = "/registration/new-application" title = "New Student Application"/>
-            <RegistrationMenuRow link = "/registration/draft-application" title = "Retrieve Draft Student Application"/>
-            <RegistrationMenuRow link = "/registration/pending-applications" title = "View Pending Applications"/>
-            <RegistrationMenuRow link = "/registration/all-applications" title = "View All Applications"/>
-          </h2>
+          <RegistrationMenuCard link = "/registration/new-application" title = "New Student Application" description="Create New Application"
+                                color="purple"/>
+          <RegistrationMenuCard link = "/registration/draft-application" title = "Retrieve Draft Student Application" description="Edit Draft Applications"
+                                color="blue"/>
+          <RegistrationMenuCard link = "/registration/pending-applications" title = "Pending Applications" description="View Pending Applications"
+                                color="yellow"/>
+          <RegistrationMenuCard link = "/registration/all-applications" title = "View All Applications" description="View All Applications"
+                                color="red"/>
+        </div>
 
-        </main>
-
-        <footer className={styles.footer}>
-        </footer>
-      </div>
     </>
   )
 }

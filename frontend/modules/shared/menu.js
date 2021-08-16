@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { withTranslation } from "next-i18next";
-import styles from './menu.module.css';
 import { useKeycloak } from "@react-keycloak/ssr";
 
 const Menu = ({t}) => {
@@ -9,7 +8,8 @@ const Menu = ({t}) => {
     {label: t('attendance'), url: '/attendance/list', role: 'teacher'},
     {label: t('new_leave_application'), url: '/leave-application/new-application', role: 'student'},
     {label: t('pending_leave_applications'), url: '/leave-application/pending-applications', role: 'teacher'},
-    {label: t('student_registration'), url: '/registration', role: 'admin'}
+    {label: t('student_registration'), url: '/registration', role: 'admin'},
+    {label: t('student_registration'), url: '/registration', role: 'teacher'}
   ]
 
   const keycloak = useKeycloak();
@@ -19,13 +19,17 @@ const Menu = ({t}) => {
     [];
 
   return (
-    <div className={styles.menu}>
-      {menuItems.map(item =>
-        <Link href={item.url} key={item.label}>
-          <a className={styles.menuItem + " p-d-block"}>{item.label}</a>
-        </Link>)
-      }
-    </div>
+      <div
+          className="fixed flex flex-col top-14 left-0 md:w-64 bg-regal-blue h-full text-white transition-all duration-300 border-none px-4">
+        {menuItems.map(item =>
+            <div
+                className=' rounded-md text-white hover:bg-white hover:text-gray-900 h-10 align-middle box-content  justify-center pt-2 font-menuFontFamily text-lg font-semibold'>
+              <Link href={item.url} key={item.label}>
+                <a className="px-2 text-center">{item.label}</a>
+              </Link>
+            </div>)
+        }
+      </div>
   );
 }
 

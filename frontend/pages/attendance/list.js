@@ -51,13 +51,14 @@ const AttendanceHome = () => {
             <span className="p-input-icon-left">
           <i className="pi pi-search"/>
           <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Search..."/>
-      </span>0
+      </span>
         </div>;
 
     return (
         <>
             <Toast ref={toast}/>
-            <div className="card">
+            <div className="pb-8 pl-24 text-2xl font-bold">Student Attendance List</div>
+            <div className="card ml-24 mr-24">
                 <Toolbar className="p-mb-4" left={submitTemplate(submitAttendance)}
                          right={datePickerTemplate(setDate, date)}/>
                 <DataTable
